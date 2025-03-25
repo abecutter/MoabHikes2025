@@ -1,0 +1,113 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Moab Hikes</title>
+
+  <!-- Leaflet CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.6.0/dist/leaflet.css"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css"/>
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 20px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 1em;
+    }
+    th, td {
+      text-align: left;
+      padding: 8px;
+      border-bottom: 1px solid #ccc;
+    }
+    #map {
+      width: 100%;
+      height: 600px;
+      margin-top: 2em;
+    }
+    @media (max-width: 768px) {
+      #map { height: 400px; }
+    }
+    @media (max-width: 480px) {
+      #map { height: 300px; }
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Top Moab Hikes</h1>
+  <p>Below are our favorite hikes in the Moab area — chosen for their scenic views, accessibility, and adventure factor. Scroll down for a map of trailheads and a list of hikes we’ve decided to skip this time around.</p>
+
+  <h2>Main Hikes</h2>
+  <table>
+    <thead>
+      <tr><th>Hike Name</th><th>Distance</th><th>Notes</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Fisher Towers</td><td>4.4 mi</td><td>Iconic red spires; great morning light</td></tr>
+      <tr><td>Grandstaff Canyon</td><td>4.5 mi</td><td>Stream crossings and Morning Glory Arch</td></tr>
+      <tr><td>Devils Garden (Primitive Loop)</td><td>7.8 mi</td><td>Challenging terrain, multiple arches</td></tr>
+      <tr><td>Hidden Valley + Moab Rim Overlook</td><td>6.2 mi</td><td>Petroglyphs and sweeping views</td></tr>
+      <tr><td>Hunter Canyon</td><td>3.4 mi</td><td>Shady canyon walk with water</td></tr>
+      <tr><td>Jeep Arch</td><td>4.0 mi</td><td>Less crowded with great arch views</td></tr>
+      <tr><td>Corona Arch</td><td>3.0 mi</td><td>Accessible hike to massive arch</td></tr>
+    </tbody>
+  </table>
+
+  <h2>Trailhead Map</h2>
+  <div id="map"></div>
+
+  <h2>Excluded Hikes</h2>
+  <p>These hikes were considered but ultimately excluded due to time, logistics, or trail conditions:</p>
+  <table>
+    <thead>
+      <tr><th>Hike Name</th><th>Reason for Exclusion</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Delicate Arch</td><td>Too crowded during our travel window</td></tr>
+      <tr><td>Negro Bill Canyon</td><td>Closed due to seasonal flooding</td></tr>
+      <tr><td>Mill Creek North Fork</td><td>Access and parking limitations</td></tr>
+    </tbody>
+  </table>
+
+  <!-- Leaflet JS -->
+  <script src="https://cdn.jsdelivr.net/npm/leaflet@1.6.0/dist/leaflet.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      var map = L.map('map', {
+        center: [38.5733, -109.5498],
+        zoom: 11
+      });
+
+      L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+        attribution: 'Map data © <a href="http://openstreetmap.org">OpenStreetMap</a>',
+        maxZoom: 18
+      }).addTo(map);
+
+      var markers = [
+        { coords: [38.7224, -109.304], label: "Fisher Towers" },
+        { coords: [38.5922, -109.5043], label: "Grandstaff Canyon" },
+        { coords: [38.7837, -109.5945], label: "Devils Garden (Primitive Loop)" },
+        { coords: [38.5385, -109.521], label: "Hidden Valley + Moab Rim Overlook" },
+        { coords: [38.5069, -109.5846], label: "Hunter Canyon" },
+        { coords: [38.6154, -109.6302], label: "Jeep Arch" },
+        { coords: [38.5741, -109.6226], label: "Corona Arch" }
+      ];
+
+      markers.forEach(function(marker) {
+        L.marker(marker.coords).addTo(map)
+          .bindPopup(marker.label)
+          .bindTooltip(marker.label, { sticky: true });
+      });
+    });
+  </script>
+</body>
+</html>
