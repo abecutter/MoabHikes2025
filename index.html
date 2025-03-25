@@ -37,8 +37,7 @@
       <th>Why Best Time</th>
       <th>Features</th>
       <th>AllTrails Link</th>
-      <th>Lat</th>
-      <th>Lon</th>
+      <th>Distance from Homebase</th>
     </tr>
   </thead>
   <tbody>
@@ -49,9 +48,8 @@
       <td>Morning</td>
       <td>Great lighting on the red spires</td>
       <td>Spires, canyon views</td>
-      <td>https://www.alltrails.com/trail/us/utah/fisher-towers-trail</td>
-      <td>38.7224</td>
-      <td>-109.3040</td>
+      <td><a href="https://www.alltrails.com/trail/us/utah/fisher-towers-trail" target="_blank">View on AllTrails</a></td>
+      <td>17.4 mi</td>
     </tr>
     <tr>
       <td>Grandstaff Canyon</td>
@@ -60,9 +58,8 @@
       <td>Morning</td>
       <td>Cooler temps, less traffic</td>
       <td>Stream crossings, Morning Glory Arch</td>
-      <td>https://www.alltrails.com/trail/us/utah/negro-bill-canyon-trail</td>
-      <td>38.5922</td>
-      <td>-109.5043</td>
+      <td><a href="https://www.alltrails.com/trail/us/utah/negro-bill-canyon-trail" target="_blank">View on AllTrails</a></td>
+      <td>7.2 mi</td>
     </tr>
     <tr>
       <td>Devils Garden (Primitive Loop)</td>
@@ -71,9 +68,8 @@
       <td>Early Morning</td>
       <td>Long hike, shade early</td>
       <td>Multiple arches, primitive terrain</td>
-      <td>https://www.alltrails.com/trail/us/utah/devils-garden-primitive-loop</td>
-      <td>38.7837</td>
-      <td>-109.5945</td>
+      <td><a href="https://www.alltrails.com/trail/us/utah/devils-garden-primitive-loop" target="_blank">View on AllTrails</a></td>
+      <td>21.3 mi</td>
     </tr>
     <tr>
       <td>Hidden Valley + Moab Rim Overlook</td>
@@ -82,9 +78,8 @@
       <td>Morning</td>
       <td>Shade in canyon early</td>
       <td>Petroglyphs, views</td>
-      <td>https://www.alltrails.com/trail/us/utah/hidden-valley-trail</td>
-      <td>38.5385</td>
-      <td>-109.5210</td>
+      <td><a href="https://www.alltrails.com/trail/us/utah/hidden-valley-trail" target="_blank">View on AllTrails</a></td>
+      <td>4.9 mi</td>
     </tr>
     <tr>
       <td>Hunter Canyon</td>
@@ -93,9 +88,8 @@
       <td>Afternoon</td>
       <td>Shade builds in canyon</td>
       <td>Water, canyon walls</td>
-      <td>https://www.alltrails.com/trail/us/utah/hunter-canyon</td>
-      <td>38.5069</td>
-      <td>-109.5846</td>
+      <td><a href="https://www.alltrails.com/trail/us/utah/hunter-canyon" target="_blank">View on AllTrails</a></td>
+      <td>7.4 mi</td>
     </tr>
     <tr>
       <td>Jeep Arch</td>
@@ -104,9 +98,8 @@
       <td>Morning</td>
       <td>Cooler temps, better light on arch</td>
       <td>Arch, solitude</td>
-      <td>https://www.alltrails.com/trail/us/utah/jeep-arch-trail</td>
-      <td>38.6154</td>
-      <td>-109.6302</td>
+      <td><a href="https://www.alltrails.com/trail/us/utah/jeep-arch-trail" target="_blank">View on AllTrails</a></td>
+      <td>12.8 mi</td>
     </tr>
     <tr>
       <td>Corona Arch</td>
@@ -115,9 +108,8 @@
       <td>Late Afternoon</td>
       <td>Sun on the arch</td>
       <td>Massive arch, scenic</td>
-      <td>https://www.alltrails.com/trail/us/utah/corona-and-bowtie-arch-trail</td>
-      <td>38.5741</td>
-      <td>-109.6226</td>
+      <td><a href="https://www.alltrails.com/trail/us/utah/corona-and-bowtie-arch-trail" target="_blank">View on AllTrails</a></td>
+      <td>10.8 mi</td>
     </tr>
   </tbody>
 </table><h2>Trailhead Map</h2>
@@ -174,7 +166,14 @@
 <script src="https://cdn.jsdelivr.net/npm/leaflet@1.6.0/dist/leaflet.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
 <script>
-  var map = L.map('map').setView([38.497356, -109.44784], 11);
+  var map = L.map('map');
+
+  var bounds = L.latLngBounds(
+    L.latLng(38.497356, -109.6302),
+    L.latLng(38.7837, -109.304)
+  );
+  map.fitBounds(bounds);
+
   L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: 'Map data © <a href="https://openstreetmap.org">OpenStreetMap</a>',
     maxZoom: 18
@@ -185,27 +184,44 @@
     prefix: 'fa',
     markerColor: 'red'
   });
-  L.marker([38.497356, -109.44784], {icon: homeIcon}).addTo(map).bindPopup("HOMEBASE");
-  L.marker([38.7224, -109.304]).addTo(map)
-    .bindPopup("Fisher Towers");
+  L.marker([38.497356, -109.44784], {icon: homeIcon})
+    .addTo(map)
+    .bindPopup("HOMEBASE")
+    .bindTooltip("HOMEBASE", {permanent: true, direction: "right"});
+  L.marker([38.7224, -109.304])
+    .addTo(map)
+    .bindPopup("Fisher Towers")
+    .bindTooltip("Fisher Towers", {permanent: true, direction: "right"});
 
-  L.marker([38.5922, -109.5043]).addTo(map)
-    .bindPopup("Grandstaff Canyon");
+  L.marker([38.5922, -109.5043])
+    .addTo(map)
+    .bindPopup("Grandstaff Canyon")
+    .bindTooltip("Grandstaff Canyon", {permanent: true, direction: "right"});
 
-  L.marker([38.7837, -109.5945]).addTo(map)
-    .bindPopup("Devils Garden (Primitive Loop)");
+  L.marker([38.7837, -109.5945])
+    .addTo(map)
+    .bindPopup("Devils Garden (Primitive Loop)")
+    .bindTooltip("Devils Garden (Primitive Loop)", {permanent: true, direction: "right"});
 
-  L.marker([38.5385, -109.521]).addTo(map)
-    .bindPopup("Hidden Valley + Moab Rim Overlook");
+  L.marker([38.5385, -109.521])
+    .addTo(map)
+    .bindPopup("Hidden Valley + Moab Rim Overlook")
+    .bindTooltip("Hidden Valley + Moab Rim Overlook", {permanent: true, direction: "right"});
 
-  L.marker([38.5069, -109.5846]).addTo(map)
-    .bindPopup("Hunter Canyon");
+  L.marker([38.5069, -109.5846])
+    .addTo(map)
+    .bindPopup("Hunter Canyon")
+    .bindTooltip("Hunter Canyon", {permanent: true, direction: "right"});
 
-  L.marker([38.6154, -109.6302]).addTo(map)
-    .bindPopup("Jeep Arch");
+  L.marker([38.6154, -109.6302])
+    .addTo(map)
+    .bindPopup("Jeep Arch")
+    .bindTooltip("Jeep Arch", {permanent: true, direction: "right"});
 
-  L.marker([38.5741, -109.6226]).addTo(map)
-    .bindPopup("Corona Arch");
+  L.marker([38.5741, -109.6226])
+    .addTo(map)
+    .bindPopup("Corona Arch")
+    .bindTooltip("Corona Arch", {permanent: true, direction: "right"});
 
 </script>
 </body>
